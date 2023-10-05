@@ -47,4 +47,8 @@ function upgradeDice() {
     updateDice()
 }
 
+function errorCheck() {
+    console.log("I'm here");
+}
+
 updateDice()
