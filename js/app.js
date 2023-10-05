@@ -52,3 +52,4 @@ function errorCheck() {
 }
 
 updateDice()
+errorCheck()
