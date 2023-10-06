@@ -6,16 +6,19 @@
     <title>Idle Dice</title>
 </head>
 <body>
-    <div id="currency">0</div>
-    <div class="dice">
-        <div class="dice-roll">0</div>
-        <div class="dice-level"></div>
-        <div class="dice-mult"></div>
-        <button type="button" class="btn-upgrade-dice"></button>
+    <div id="app">
+        <div id="currency">{{ currencyAmount }}</div>
+        <div class="dice">
+            <div class="dice-roll">{{ dice.side }}</div>
+            <div class="dice-level">Level: {{ dice.level }}</div>
+            <div class="dice-mult">Multiplier: {{ dice.mult }}</div>
+            <button type="button" class="btn-upgrade-dice" @click="upgradeDice">{{ dice.cost.toFixed(1) }}</button>
+        </div>
+        <button type="button" :disabled="rolling" @click="rollTheDice">Roll</button>
+        <button type="button" v-if="dice.level >= 5" @click="upgrades.auto1">Auto Roll<br>{{ autoRollUpgrades.cost }}</button>
     </div>
-
-    <button type="button" id="roll">Roll</button>
-
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

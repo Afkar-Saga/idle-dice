@@ -1,55 +1,62 @@
-const currency = document.querySelector("#currency")
-const diceContainer = document.querySelector(".dice")
-const diceRoll = document.querySelector(".dice-roll")
-const diceLevel = document.querySelector(".dice-level")
-const diceMult = document.querySelector(".dice-mult")
-const diceUpgradeBtn = document.querySelector('.btn-upgrade-dice')
-const rollBtn = document.querySelector("#roll")
+const { createApp, ref } = Vue
 
-let currencyAmount = 0
-const dice = {
-    side: 0,
-    level: 1,
-    mult: 1,
-    cost: 10
-}
+createApp({
+    setup() {
+        let currencyAmount = ref(0)
+        let rolling = ref(false)
+        const dice = {
+            side: 0,
+            level: 1,
+            mult: 1,
+            cost: 10
+        }
+        const autoRollUpgrades = {
+            level: 0,
+            cost: 1000
+        }
+        const upgrades = {
+            bought: ref(false),
+            auto1: function() {
+                if (autoRollUpgrades.cost > currencyAmount.value) return
+                currencyAmount.value -= autoRollUpgrades.cost
+                autoRollUpgrades.level++
+                upgrades.bought = true
+            }
+        }
 
-rollBtn.onclick = () => {
-    rollBtn.disabled = true
-    setTimeout(rollDice, 300)
-}
+        setInterval(idleRoll, 3000)
 
-diceUpgradeBtn.onclick = () => {
-    upgradeDice()
-}
+        function idleRoll() {
+            if (autoRollUpgrades.level == 0) return
+            rollTheDice()
+        }
 
-function rollDice() {
-    dice.side = Math.ceil(Math.random() * 4)
-    diceRoll.textContent = dice.side
-    currencyAmount += dice.side * dice.mult
-    currency.textContent = currencyAmount
-    rollBtn.disabled = false
-}
-
-function updateDice() {
-    diceLevel.textContent = `Level: ${dice.level}`
-    diceMult.textContent = `Multiplier: ${dice.mult}`
-    diceUpgradeBtn.textContent = dice.cost.toFixed(1)
-}
-
-function upgradeDice() {
-    if (dice.cost > currencyAmount) return
-    currencyAmount -= dice.cost
-    dice.level++
-    dice.mult++
-    dice.cost *= dice.level % 3 == 2 ? 2.5 : 2
-    currency.textContent = currencyAmount
-    updateDice()
-}
-
-function errorCheck() {
-    console.log("I'm here");
-}
-
-updateDice()
-errorCheck()
+        function rollTheDice() {
+            rolling.value = true
+            setTimeout(rollDice, 300)
+        }
+        
+        function rollDice() {
+            dice.side = Math.ceil(Math.random() * 4)
+            currencyAmount.value += dice.side * dice.mult
+            rolling.value = false
+        }
+        
+        function upgradeDice() {
+            if (dice.cost > currencyAmount.value) return
+            currencyAmount.value -= dice.cost
+            dice.level++
+            dice.mult++
+            dice.cost *= dice.level % 3 == 2 ? 2.5 : 2
+        }
+        return {
+            currencyAmount,
+            rolling,
+            dice,
+            upgrades,
+            autoRollUpgrades,
+            rollTheDice,
+            upgradeDice
+        }
+    }
+}).mount('#app')
