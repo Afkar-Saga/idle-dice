@@ -1,60 +1,51 @@
-<script setup>
-import { onMounted } from 'vue'
+<template>
+	<div class="container">
+		<h2>Generators</h2>
+		<div v-for="generator in generators" :key="generator.id">
+			<div v-if="isGeneratorAvailable(generator)">
+				<div>{{ generator.name }}</div>
+				<div>You have {{ generator.count }}</div>
+				<div>Cost: {{ generator.cost }}</div>
+				<button type="button" @click="buyGenerator(generator)">Buy</button>
+			</div>
+		</div>
+	</div>
+</template>
 
-// Props to pass in variables from Parent Component
-const props = defineProps({
-    generators: Array,
-    totalCurrency: Number,
-    mainDiceSides: Number, // higher-level generators will be unlocked based on the main dice
-})
-// Event emitter to update the total currency in the Parent Component
-const emit = defineEmits(['update-total-currency'])
+<script setup>
+import { onMounted, computed } from "vue"
+import { useGeneratorStore } from "../stores/GeneratorStore"
+
+const generatorStore = useGeneratorStore()
+const generators = computed(() => generatorStore.generators)
 
 const buyGenerator = generator => {
-    if (props.totalCurrency >= generator.cost && props.mainDiceSides >= generator.requiredDiceSides) {
-        const newTotalCurrency = props.totalCurrency - generator.cost
-        generator.count++
-
-        emit('update-total-currency', newTotalCurrency)
-    }
+	generatorStore.buyGenerator(generator)
 }
 
 const isGeneratorAvailable = generator => {
-    return props.mainDiceSides >= generator.requiredDiceSides
+	return generatorStore.isGeneratorAvailable(generator)
 }
 
-const rollDice = generator => {
-    // Simulate rolling a dice
-    const diceResult = Math.floor(Math.random() * generator.requiredDiceSides) + 1
-    const generatedIdleDices = diceResult * generator.count * generator.multiplier
-
-    // don't have idle dices yet so i'll just console.log it ¯\_(ツ)_/¯
-    console.log(`Generated ${generatedIdleDices} idle dices for ${generator.name}`)
-}
-
-const autoRollDice = () => {
-    // Rolling every generator if there's at least 1 generator
-    for (const generator of props.generators) {
-        if (generator.count) {
-            rollDice(generator)
-        }
-    }
+const autoRoll = generator => {
+	setInterval(() => {
+		generatorStore.rollDice(generator)
+	}, generator.interval)
 }
 
 onMounted(() => {
-    // Start auto roll when the component is mounted
-    setInterval(autoRollDice, 20000) //change interval later
+	// Start auto roll when the component is mounted
+	generators.value.forEach(generator => {
+		if (isGeneratorAvailable(generator)) autoRoll(generator)
+	})
 })
 </script>
 
-<template>
-    <div>
-        <h2>Generators</h2>
-        <div v-for="generator in generators" :key="generator.id">
-            <div v-if="isGeneratorAvailable(generator)">
-                {{ generator.name }} - Cost: {{ generator.cost }} - You have {{ generator.count }}
-                <button type="button" @click="buyGenerator(generator)">Buy</button>
-            </div>
-        </div>
-    </div>
-</template>
+<style lang="scss" scoped>
+.container {
+	padding: 25px;
+	h2 {
+		text-align: center;
+	}
+}
+</style>

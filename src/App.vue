@@ -1,9 +1,16 @@
+<template>
+	<div>
+		<ThemeSwitch />
+		<Header />
+
+		<DiceView />
+	</div>
+</template>
+
 <script setup>
-import DiceView from './views/DiceView.vue';
-
-
+import Header from "./components/Header.vue"
+import ThemeSwitch from "./components/ThemeSwitch.vue"
+import DiceView from "./views/DiceView.vue"
 </script>
 
-<template>
-  <DiceView />
-</template>
+<style lang="scss" scoped></style>

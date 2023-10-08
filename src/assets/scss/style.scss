@@ -1,0 +1,16 @@
+[data-theme="dark"] {
+    --bg-color: #111213;
+    --font-color: #f3f3f3;
+}
+[data-theme="light"] {
+    --bg-color: #f3f3f3;
+    --font-color: #111213;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--font-color);
+    margin: 0;
+    min-height: 100vh;
+}
