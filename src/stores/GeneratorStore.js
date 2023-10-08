@@ -62,13 +62,17 @@ export const useGeneratorStore = defineStore("generatorStore", {
 		],
 	}),
 	getters: {
-		isGeneratorAvailable() {
+		isGeneratorAvailable: state => generatorId => {
+			const generator = state.generators.find(g => g.id === generatorId)
+			if (!generator) return false
 			const mainDice = useMainDiceStore()
-			return generator => mainDice.mainDiceSides >= generator.requiredDiceSides
+			return mainDice.mainDiceSides >= generator.requiredDiceSides
 		},
 	},
 	actions: {
-		buyGenerator(generator) {
+		buyGenerator(generatorId) {
+			const generator = this.generators.find(g => g.id === generatorId)
+			if (!generator) return
 			const currency = useCurrencyStore()
 			const mainDice = useMainDiceStore()
 			if (currency.totalCurrency >= generator.cost && mainDice.mainDiceSides >= generator.requiredDiceSides) {
@@ -76,7 +80,9 @@ export const useGeneratorStore = defineStore("generatorStore", {
 				generator.count++
 			}
 		},
-		rollDice(generator) {
+		rollDice(generatorId) {
+			const generator = this.generators.find(g => g.id === generatorId)
+
 			// Simulate rolling a dice
 			const diceResult = Math.floor(Math.random() * generator.requiredDiceSides) + 1
 			const generatedIdleDices = diceResult * generator.count * generator.multiplier
