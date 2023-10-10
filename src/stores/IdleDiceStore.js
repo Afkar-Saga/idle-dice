@@ -16,6 +16,13 @@ export const useIdleDiceStore = defineStore("idleDiceStore", {
       for (let i = 0; i < amount; i++) {
         this.idleDices.unshift(new IdleDice(sides))
       }
+    },
+    rollDice() {
+      setInterval(() => {
+        if (this.idleDices.length === 0) return
+        this.idleDices.pop()
+        console.log("Rolled 1 dice")
+      }, 1000);
     }
   }
 })

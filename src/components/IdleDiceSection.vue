@@ -12,6 +12,7 @@ import { computed } from 'vue';
 import { useIdleDiceStore } from '../stores/IdleDiceStore'
 const idleDice = useIdleDiceStore()
 const idleDices = computed(() => idleDice.idleDices)
+idleDice.rollDice()
 </script>
 
 <style lang="scss" scoped>
