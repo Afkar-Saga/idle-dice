@@ -6,6 +6,7 @@
 				<div>{{ generator.name }}</div>
 				<div>You have {{ generator.count }}</div>
 				<div>Cost: {{ generator.cost }}</div>
+				<div>Interval: {{ generator.interval / 1000 }} seconds</div>
 				<button type="button" @click="generatorStore.buyGenerator(generator.id)">Buy</button>
 			</div>
 		</div>
@@ -37,8 +38,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '../assets/scss/section';
 .container {
-	padding: 25px;
+	padding: section.$padding 8px;
 	h2 {
 		text-align: center;
 	}

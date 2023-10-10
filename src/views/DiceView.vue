@@ -1,22 +1,21 @@
 <template>
 	<div class="sectionContainer">
-		<GeneratorSection :main-dice-sides="mainDiceSides" />
-		<div></div>
-		<div></div>
+		<GeneratorSection />
+		<IdleDiceSection />
+		<MainDiceSection />
 	</div>
 </template>
 
 <script setup>
-import { ref } from "vue"
 import GeneratorSection from "../components/GeneratorSection.vue"
-
-const mainDiceSides = ref(4)
+import IdleDiceSection from "../components/IdleDiceSection.vue"
+import MainDiceSection from "../components/MainDiceSection.vue"
 </script>
 
 <style lang="scss" scoped>
 .sectionContainer {
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 2fr 3fr 2fr;
 }
 </style>

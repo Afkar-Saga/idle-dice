@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<img src="/src/assets/dice-logo.svg" alt="dice logo" />
+		<img src="../assets/dice-logo.svg" alt="dice logo" />
 		<h1>Idle Dice</h1>
 	</div>
 	<div>
