@@ -7,6 +7,10 @@
     --font-color: #111213;
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: var(--bg-color);

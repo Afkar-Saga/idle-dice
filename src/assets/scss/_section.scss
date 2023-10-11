@@ -1,1 +1,7 @@
 $padding: 30px;
+$m-dice-width: 120px;
+$i-dice-width: 24px;
+@mixin h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}

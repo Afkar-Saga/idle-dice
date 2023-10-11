@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useCurrencyStore = defineStore("currencyStore", {
   state: () => ({
-    totalCurrency: 10,
+    totalCurrency: Infinity,
   }),
   actions: {
     updateTotalCurrency(newTotalCurrency) {

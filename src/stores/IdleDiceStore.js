@@ -1,28 +1,27 @@
-import { defineStore } from "pinia";
+import { defineStore } from "pinia"
 
-class IdleDice {
-  constructor(sides) {
-    this.sides = sides
-    this.name = `${this.sides}-sided dice`
-  }
+class Dice {
+	constructor(sides) {
+		this.sides = sides
+	}
 }
 
 export const useIdleDiceStore = defineStore("idleDiceStore", {
-  state: () => ({
-    idleDices: [],
-  }),
-  actions: {
-    addIdleDices(amount, sides) {
-      for (let i = 0; i < amount; i++) {
-        this.idleDices.unshift(new IdleDice(sides))
-      }
-    },
-    rollDice() {
-      setInterval(() => {
-        if (this.idleDices.length === 0) return
-        this.idleDices.pop()
-        console.log("Rolled 1 dice")
-      }, 1000);
+	state: () => ({
+		idleDices: [{sides: 6}],
+	}),
+  getters: {
+    groupBySides: (state) => {
+      return state.idleDices.reduce((memo, x) => {
+        if (!memo[x['sides']]) memo[x['sides']] = []
+        memo[x['sides']].push(x)
+        return memo
+      }, {})
     }
-  }
+  },
+	actions: {
+		addIdleDices(sides) {
+			this.idleDices.push(new Dice(sides))
+		},
+	},
 })

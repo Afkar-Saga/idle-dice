@@ -3,7 +3,7 @@ import { useCurrencyStore } from "./CurrencyStore"
 
 export const useMainDiceStore = defineStore("mainDiceStore", {
 	state: () => ({
-		mainDiceSides: 20,
+		sides: 4,
 		storedIdleResults: 0,
 	}),
 	actions: {
