@@ -2,12 +2,12 @@
 	<div class="container">
 		<h2>Shops</h2>
 		<div v-for="shop in shops" :key="shop.dice">
-			<div v-if="mainDice.sides >= shop.dice" class="shop" @click="shopStore.buyDice(shop.dice)">
+			<div v-if="mainDice.sides >= shop.dice.sides" class="shop" @click="shopStore.buyDice(shop.dice)">
 				<img src="../assets/dice-logo.svg" alt="dice">
-				<h4>D{{ shop.dice }}</h4>
+				<h4>D{{ shop.dice.sides }}</h4>
 				<div class="cost">Cost: {{ shop.cost }}</div>
 				<div class="amount">{{ shop.amount }}</div>
-				<div v-if="shop.result" class="result">{{ shop.result }}</div>
+				<div v-if="shop.dice.result" class="result">{{ shop.dice.result }}</div>
 			</div>
 		</div>
 	</div>

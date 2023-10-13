@@ -1,15 +1,21 @@
 <template>
 	<div class="container">
     <h2>Main Dice</h2>
-		<img src="../assets/dice-logo.svg" alt="dice" />
-		<div class="result">{{ mainDice.storedIdleResults }}</div>
+		<div class="main-dice">
+      <div>{{ mainDice.sides }}</div>
+      <img src="../assets/dice-logo.svg" alt="dice" />
+    </div>
+		<div class="result">Alea: {{ currency.storedCurrency }}</div>
     <button type="button">Roll</button>
 	</div>
 </template>
 
 <script setup>
+import { useCurrencyStore } from "../stores/CurrencyStore";
 import { useMainDiceStore } from "../stores/MainDiceStore"
+
 const mainDice = useMainDiceStore()
+const currency = useCurrencyStore()
 </script>
 
 <style lang="scss" scoped>
@@ -19,6 +25,9 @@ const mainDice = useMainDiceStore()
   flex-direction: column;
   align-items: center;
   padding: section.$padding 5px;
+  .main-dice {
+    min-width: 100px;
+  }
   h2 {
     @include section.h2;
   }

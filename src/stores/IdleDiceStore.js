@@ -1,14 +1,9 @@
 import { defineStore } from "pinia"
-
-class Dice {
-	constructor(sides) {
-		this.sides = sides
-	}
-}
+import { IdleDice } from "../dice"
 
 export const useIdleDiceStore = defineStore("idleDiceStore", {
 	state: () => ({
-		idleDices: [{sides: 6}],
+		idleDices: [new IdleDice(4)],
 	}),
   getters: {
     groupBySides: (state) => {
@@ -17,11 +12,11 @@ export const useIdleDiceStore = defineStore("idleDiceStore", {
         memo[x['sides']].push(x)
         return memo
       }, {})
-    }
+    },
   },
 	actions: {
 		addIdleDices(sides) {
-			this.idleDices.push(new Dice(sides))
+			this.idleDices.push(new IdleDice(sides))
 		},
 	},
 })
