@@ -13,6 +13,7 @@ class Shop {
 
 export const useShopStore = defineStore('shopStore', {
   state: () => ({
+    /** @type {Shop[]} */
     shops: [
       new Shop(new Dice(4), 10),
       new Shop(new Dice(6), 100),
@@ -23,16 +24,16 @@ export const useShopStore = defineStore('shopStore', {
     ]
   }),
   actions: {
-    buyDice(dice) {
+    buyDice(diceId) {
       const currency = useCurrencyStore()
       const idleDice = useIdleDiceStore()
-      const shop = this.shops.find(d => d.dice === dice)
+      const shop = this.shops.find(s => s.dice.id === diceId)
       if (shop.cost > currency.totalCurrency) return
       currency.updateTotalCurrency(currency.totalCurrency - shop.cost)
-      let roll = shop.dice.roll()
-      shop.dice.result = roll
-      if (roll === shop.dice.sides) {
-        idleDice.addIdleDices(shop.dice.sides)
+      const shopDice = shop.dice
+      shopDice.roll()
+      if (shopDice.result === shopDice.sides) {
+        idleDice.addIdleDices(shopDice.sides)
         shop.amount++
         shop.cost *= (String(shop.cost)[0] == "2") ? 2.5 : 2
       }

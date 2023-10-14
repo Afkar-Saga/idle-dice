@@ -1,20 +1,35 @@
 <template>
 	<div class="container">
     <h2>Main Dice</h2>
-		<div class="main-dice">
+		<div class="main-dice" @click="mainDiceStore.rollDice">
+      <div>{{ mainDice.result }}</div>
+      <img src="../assets/dice-logo.svg" alt="dice" v-bind:class="{ rolling: isRolling }" />
       <div>{{ mainDice.sides }}</div>
-      <img src="../assets/dice-logo.svg" alt="dice" />
     </div>
-		<div class="result">Alea: {{ currency.storedCurrency }}</div>
-    <button type="button">Roll</button>
+		<div class="stored-currency">Alea: {{ currency.storedCurrency }}</div>
+    <div class="active-dice">
+      <div class="sum" v-if="resultSum">{{ resultSum }}</div>
+      <div class="dice-container">
+        <div v-for="dice in activeDices" :key="dice.id">
+          <DiceActive :dice-id="dice.id" />
+        </div>
+      </div>
+      <button type="button" @click="activeDiceStore.rollDices" :disabled="disabled">Roll</button>
+    </div>
 	</div>
 </template>
 
 <script setup>
-import { useCurrencyStore } from "../stores/CurrencyStore";
+import { storeToRefs } from "pinia";
+import { useActiveDiceStore } from "../stores/ActiveDiceStore"
+import { useCurrencyStore } from "../stores/CurrencyStore"
 import { useMainDiceStore } from "../stores/MainDiceStore"
+import DiceActive from "./DiceActive.vue"
 
-const mainDice = useMainDiceStore()
+const mainDiceStore = useMainDiceStore()
+const { mainDice, isRolling } = storeToRefs(mainDiceStore)
+const activeDiceStore = useActiveDiceStore()
+const { activeDices, resultSum, disabled } = storeToRefs(activeDiceStore)
 const currency = useCurrencyStore()
 </script>
 
@@ -23,23 +38,29 @@ const currency = useCurrencyStore()
 .container {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   padding: section.$padding 5px;
-  .main-dice {
-    min-width: 100px;
-  }
   h2 {
     @include section.h2;
   }
-  img {
-    max-width: section.$m-dice-width;
-    cursor: pointer;
-    animation: rotate 100s linear infinite;
+  .main-dice {
+    min-width: 100px;
+    img {
+      max-width: section.$m-dice-width;
+      cursor: pointer;
+    }
+    // img:hover {
+    //   transform: scale(1.1);
+    // }
+    .idle {
+      animation: rotateZ 100s linear infinite;
+    }
+    .rolling {
+      animation: rolling 2s ease-out;
+    }
   }
-  img:hover {
-    transform: scale(1.1);
-  }
-  .result {
+  .stored-currency {
     font-size: 30px;
     margin: 20px 0;
   }
@@ -50,13 +71,36 @@ const currency = useCurrencyStore()
     font-weight: bold;
     cursor: pointer;
   }
+  .active-dice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .sum {
+      text-align: center;
+      font-size: 1.4em;
+      position: absolute;
+    }
+    .dice-container {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
+  }
 }
-@keyframes rotate {
-  0% {
+@keyframes rotateZ {
+  from {
     transform: rotateZ(0deg);
   }
+  to {
+    transform: rotateZ(1080deg);
+  }
+}
+@keyframes rolling {
+  0% {
+    transform: rotateY(0deg);
+  }
   100% {
-    transform: rotateZ(360deg);
+    transform: rotateY(3600deg);
   }
 }
 </style>

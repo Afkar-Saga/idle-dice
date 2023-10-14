@@ -14,12 +14,10 @@
 <script setup>
 import DiceIdle from './DiceIdle.vue'
 import { useIdleDiceStore } from "../stores/IdleDiceStore"
-import { useCurrencyStore } from "../stores/CurrencyStore"
 import { storeToRefs } from "pinia"
 
-const currency = useCurrencyStore()
 const idleDiceStore = useIdleDiceStore()
-const { idleDices, groupBySides } = storeToRefs(idleDiceStore)
+const { groupBySides } = storeToRefs(idleDiceStore)
 
 </script>
 
@@ -40,9 +38,6 @@ const { idleDices, groupBySides } = storeToRefs(idleDiceStore)
 			padding: 5px;
 			display: grid;
 			grid-template-columns: repeat(10, auto);
-			img {
-				max-width: section.$i-dice-width;
-			}
 		}
 	}
 }

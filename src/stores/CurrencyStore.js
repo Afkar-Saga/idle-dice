@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useCurrencyStore = defineStore("currencyStore", {
   state: () => ({
-    totalCurrency: 100000,
+    totalCurrency: 0,
     storedCurrency: 0,
   }),
   actions: {

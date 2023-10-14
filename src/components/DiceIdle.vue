@@ -2,7 +2,7 @@
 	<div>
 		<img src="../assets/dice-logo.svg" alt="dice" />
 		<div>{{ dice.sides }}</div>
-		<div v-if="dice.result">{{ dice.result }}</div>
+		<div>{{ dice.result }}</div>
 	</div>
 </template>
 
@@ -25,4 +25,9 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@use '../assets/scss/section';
+img {
+	max-width: section.$i-dice-width;
+}
+</style>

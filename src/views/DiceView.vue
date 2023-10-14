@@ -14,7 +14,6 @@ import SectionDiceMain from "../components/SectionDiceMain.vue"
 
 <style lang="scss" scoped>
 .sectionContainer {
-	height: 100vh;
 	display: grid;
 	grid-template-columns: 2fr 3fr 2fr;
 }

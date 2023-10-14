@@ -3,7 +3,8 @@ import { IdleDice } from "../dice"
 
 export const useIdleDiceStore = defineStore("idleDiceStore", {
 	state: () => ({
-		idleDices: [new IdleDice(4)],
+    /** @type {IdleDice[]} */
+		idleDices: [],
 	}),
   getters: {
     groupBySides: (state) => {

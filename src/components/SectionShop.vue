@@ -1,24 +1,25 @@
 <template>
 	<div class="container">
 		<h2>Shops</h2>
-		<div v-for="shop in shops" :key="shop.dice">
-			<div v-if="mainDice.sides >= shop.dice.sides" class="shop" @click="shopStore.buyDice(shop.dice)">
+		<div v-for="shop in shops" :key="shop.dice.id">
+			<div v-if="mainDice.sides >= shop.dice.sides" class="shop" @click="shopStore.buyDice(shop.dice.id)">
 				<img src="../assets/dice-logo.svg" alt="dice">
 				<h4>D{{ shop.dice.sides }}</h4>
 				<div class="cost">Cost: {{ shop.cost }}</div>
 				<div class="amount">{{ shop.amount }}</div>
-				<div v-if="shop.dice.result" class="result">{{ shop.dice.result }}</div>
+				<div class="result">{{ shop.dice.result }}</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 import { useMainDiceStore } from '../stores/MainDiceStore'
 import { useShopStore } from '../stores/ShopStore'
 
-const mainDice = useMainDiceStore()
+const mainDiceStore = useMainDiceStore()
+const { mainDice } = storeToRefs(mainDiceStore)
 const shopStore = useShopStore()
 const { shops } = storeToRefs(shopStore)
 </script>

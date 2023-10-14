@@ -1,15 +1,22 @@
 import { defineStore } from "pinia"
 import { useCurrencyStore } from "./CurrencyStore"
+import { Dice } from "../dice"
 
 export const useMainDiceStore = defineStore("mainDiceStore", {
 	state: () => ({
-		sides: 4,
+		mainDice: new Dice(4),
+		isRolling: false,
 	}),
 	actions: {
 		rollDice() {
-			const diceResult = Math.floor(Math.random() * this.mainDiceSides) + 1
-			const currency = useCurrencyStore()
-			currency.updateTotalCurrency(currency.totalCurrency + this.storedIdleResults * diceResult)
+			setTimeout(() => {
+				this.isRolling = false
+				this.mainDice.roll()
+				const currency = useCurrencyStore()
+				currency.updateTotalCurrency(currency.totalCurrency + currency.storedCurrency * this.mainDice.result)
+				currency.storeCurrency(0)
+			}, 2000)
+			this.isRolling = true
 		}
 	}
 })

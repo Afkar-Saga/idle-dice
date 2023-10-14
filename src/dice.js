@@ -5,7 +5,11 @@ export class Dice {
 		this.result = 0
 	}
 
-	roll = () => Math.floor(Math.random() * this.sides) + 1
+	roll() { 
+		let result = Math.floor(Math.random() * this.sides) + 1
+		this.result = result
+		return result
+	}
 }
 
 export class IdleDice extends Dice {
@@ -16,19 +20,14 @@ export class IdleDice extends Dice {
 
 	idleRoll(currency) {
 		setInterval(() => {
-			let roll = this.roll()
-			this.result = roll
-			currency.storeCurrency(currency.storedCurrency + roll)
+			this.roll()
+			currency.storeCurrency(currency.storedCurrency + this.result)
 		}, this.interval)
 	}
 }
 
-export class MainDice extends Dice {
+export class ActiveDice extends Dice {
 	constructor(sides) {
 		super(sides)
 	}
-}
-
-export const rollDice = sides => {
-  return Math.floor(Math.random() * sides) + 1
 }
