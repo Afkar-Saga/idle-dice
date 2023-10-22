@@ -18,9 +18,9 @@ export const useShopStore = defineStore('shopStore', {
       new Shop(new Dice(4), 10),
       new Shop(new Dice(6), 100),
       new Shop(new Dice(8), 1000),
-      new Shop(new Dice(10), 1000),
-      new Shop(new Dice(12), 10000),
-      new Shop(new Dice(20), 100000),
+      new Shop(new Dice(10), 10000),
+      new Shop(new Dice(12), 100000),
+      new Shop(new Dice(20), 1000000),
     ]
   }),
   actions: {

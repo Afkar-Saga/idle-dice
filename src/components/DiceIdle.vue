@@ -26,8 +26,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use '../assets/scss/section';
+@use '../assets/scss/dice';
 img {
-	max-width: section.$i-dice-width;
+	max-width: dice.$idle-width;
 }
 </style>

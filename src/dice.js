@@ -3,6 +3,7 @@ export class Dice {
 		this.id = Math.floor(Math.random() * 99999)
 		this.sides = sides
 		this.result = 0
+    this.isRolling = false
 	}
 
 	roll() { 
@@ -15,7 +16,7 @@ export class Dice {
 export class IdleDice extends Dice {
 	constructor(sides) {
 		super(sides)
-		this.interval = 5000
+		this.interval = 1000
 	}
 
 	idleRoll(currency) {
@@ -27,7 +28,9 @@ export class IdleDice extends Dice {
 }
 
 export class ActiveDice extends Dice {
-	constructor(sides) {
+	constructor(sides, cost, bought = false) {
 		super(sides)
+    this.cost = cost
+    this.bought = bought
 	}
 }

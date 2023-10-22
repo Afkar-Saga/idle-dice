@@ -1,0 +1,16 @@
+$main-width: 120px;
+$idle-width: 24px;
+$active-width: 44px;
+
+@mixin rolling {
+  animation: roll 1s ease-out;
+}
+
+@keyframes roll {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(3600deg);
+  }
+}

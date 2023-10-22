@@ -3,7 +3,7 @@
     <h2>Main Dice</h2>
 		<div class="main-dice" @click="mainDiceStore.rollDice">
       <div>{{ mainDice.result }}</div>
-      <img src="../assets/dice-logo.svg" alt="dice" v-bind:class="{ rolling: isRolling }" />
+      <img src="../assets/dice-logo.svg" alt="dice" :class="{ rolling: mainDice.isRolling }" />
       <div>{{ mainDice.sides }}</div>
     </div>
 		<div class="stored-currency">Alea: {{ currency.storedCurrency }}</div>
@@ -27,7 +27,7 @@ import { useMainDiceStore } from "../stores/MainDiceStore"
 import DiceActive from "./DiceActive.vue"
 
 const mainDiceStore = useMainDiceStore()
-const { mainDice, isRolling } = storeToRefs(mainDiceStore)
+const { mainDice } = storeToRefs(mainDiceStore)
 const activeDiceStore = useActiveDiceStore()
 const { activeDices, resultSum, disabled } = storeToRefs(activeDiceStore)
 const currency = useCurrencyStore()
@@ -35,10 +35,10 @@ const currency = useCurrencyStore()
 
 <style lang="scss" scoped>
 @use "../assets/scss/section";
+@use "../assets/scss/dice";
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
   padding: section.$padding 5px;
   h2 {
@@ -47,12 +47,12 @@ const currency = useCurrencyStore()
   .main-dice {
     min-width: 100px;
     img {
-      max-width: section.$m-dice-width;
+      max-width: dice.$main-width;
       cursor: pointer;
     }
-    // img:hover {
-    //   transform: scale(1.1);
-    // }
+    img:hover {
+      transform: scale(1.1);
+    }
     .idle {
       animation: rotateZ 100s linear infinite;
     }
@@ -81,6 +81,7 @@ const currency = useCurrencyStore()
       position: absolute;
     }
     .dice-container {
+      width: 100%;
       display: flex;
       flex-direction: row;
       gap: 10px;
