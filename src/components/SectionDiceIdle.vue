@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="idle-container">
 		<h2>Idle Dices</h2>
 		<div class="dice-container">
 			<div v-for="side in groupBySides" class="dice-sides-container">
@@ -23,7 +23,8 @@ const { groupBySides } = storeToRefs(idleDiceStore)
 
 <style lang="scss" scoped>
 @use "../assets/scss/section";
-.container {
+.idle-container {
+  grid-row: span 2;
 	padding: section.$padding;
 	h2 {
 		@include section.h2;

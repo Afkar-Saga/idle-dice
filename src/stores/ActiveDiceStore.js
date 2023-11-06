@@ -14,7 +14,6 @@ export const useActiveDiceStore = defineStore('activeDiceStore', {
     ],
     resultSum: 0,
     disabled: false,
-    interval: 1000,
   }),
   actions: {
     rollDices() {
@@ -22,19 +21,12 @@ export const useActiveDiceStore = defineStore('activeDiceStore', {
       setTimeout(() => {
         this.resultSum = 0
         this.disabled = false
-      }, this.interval)
+      }, 1000)
       const currency = useCurrencyStore()
       this.activeDices.forEach(dice => {
         if (dice.bought) this.resultSum += dice.roll()
       })
       currency.storeCurrency(currency.storedCurrency + this.resultSum)
-    },
-    buyDice(diceId) {
-      const dice = this.activeDices.find(dice => dice.id === diceId)
-      const currency = useCurrencyStore()
-      if (currency.totalCurrency < dice.cost) return
-      currency.totalCurrency -= dice.cost
-      dice.bought = true
     }
   }
 })

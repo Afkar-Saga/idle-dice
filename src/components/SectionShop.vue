@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="shop-container">
 		<h2>Shops</h2>
 		<div v-for="shop in shops" :key="shop.dice.id">
 			<div v-if="mainDice.sides >= shop.dice.sides" class="shop" @click="shopStore.buyDice(shop.dice.id)">
@@ -26,7 +26,9 @@ const { shops } = storeToRefs(shopStore)
 
 <style lang="scss" scoped>
 @use '../assets/scss/section';
-.container {
+.shop-container {
+  grid-row: span 2;
+  overflow-y: auto;
 	padding: section.$padding 8px;
 	h2 {
 		@include section.h2;

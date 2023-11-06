@@ -1,10 +1,8 @@
 <template>
-	<div>
-		<ThemeSwitch />
-		<Header />
+  <ThemeSwitch />
+  <Header />
 
-		<DiceView />
-	</div>
+  <DiceView />
 </template>
 
 <script setup>

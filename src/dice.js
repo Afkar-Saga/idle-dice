@@ -28,9 +28,10 @@ export class IdleDice extends Dice {
 }
 
 export class ActiveDice extends Dice {
-	constructor(sides, cost, bought = false) {
+	constructor(sides, cost, unlocked = false) {
 		super(sides)
     this.cost = cost
-    this.bought = bought
-	}
+    this.level = 0
+    this.unlocked = unlocked
+  }
 }

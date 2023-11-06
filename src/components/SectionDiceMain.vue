@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="main-container">
     <h2>Main Dice</h2>
 		<div class="main-dice" @click="mainDiceStore.rollDice">
       <div>{{ mainDice.result }}</div>
@@ -7,36 +7,23 @@
       <div>{{ mainDice.sides }}</div>
     </div>
 		<div class="stored-currency">Alea: {{ currency.storedCurrency }}</div>
-    <div class="active-dice">
-      <div class="sum" v-if="resultSum">{{ resultSum }}</div>
-      <div class="dice-container">
-        <div v-for="dice in activeDices" :key="dice.id">
-          <DiceActive :dice-id="dice.id" />
-        </div>
-      </div>
-      <button type="button" @click="activeDiceStore.rollDices" :disabled="disabled">Roll</button>
-    </div>
 	</div>
 </template>
 
 <script setup>
 import { storeToRefs } from "pinia";
-import { useActiveDiceStore } from "../stores/ActiveDiceStore"
 import { useCurrencyStore } from "../stores/CurrencyStore"
 import { useMainDiceStore } from "../stores/MainDiceStore"
-import DiceActive from "./DiceActive.vue"
 
 const mainDiceStore = useMainDiceStore()
 const { mainDice } = storeToRefs(mainDiceStore)
-const activeDiceStore = useActiveDiceStore()
-const { activeDices, resultSum, disabled } = storeToRefs(activeDiceStore)
 const currency = useCurrencyStore()
 </script>
 
 <style lang="scss" scoped>
 @use "../assets/scss/section";
 @use "../assets/scss/dice";
-.container {
+.main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,29 +50,6 @@ const currency = useCurrencyStore()
   .stored-currency {
     font-size: 30px;
     margin: 20px 0;
-  }
-  button {
-    width: 100px;
-    height: 48px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .active-dice {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .sum {
-      text-align: center;
-      font-size: 1.4em;
-      position: absolute;
-    }
-    .dice-container {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
-    }
   }
 }
 @keyframes rotateZ {
