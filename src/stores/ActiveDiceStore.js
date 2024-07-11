@@ -24,9 +24,12 @@ export const useActiveDiceStore = defineStore('activeDiceStore', {
       }, 1000)
       const currency = useCurrencyStore()
       this.activeDices.forEach(dice => {
-        if (dice.bought) this.resultSum += dice.roll()
+        if (dice.unlocked) this.resultSum += dice.roll()
       })
       currency.storeCurrency(currency.storedCurrency + this.resultSum)
+    },
+    upgrade() {
+      
     }
   }
 })
